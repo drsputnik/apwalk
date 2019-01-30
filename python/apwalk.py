@@ -10,7 +10,7 @@ def init_screen():
 	curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLUE)
 	curses.init_pair(2, curses.COLOR_YELLOW, curses.COLOR_BLUE)
 	curses.init_pair(3, curses.COLOR_CYAN, curses.COLOR_BLUE)
-	curses.init_pair(4, curses.COLOR_BLUE, curses.COLOR_GREEN)
+	curses.init_pair(4, curses.COLOR_WHITE, curses.COLOR_BLUE)
 	return screen, r, c
 
 def init_win(h, w, y, x):					# Set up a new window
@@ -36,39 +36,29 @@ def paint():							# Re-Paint the screen
 
 stdscr, row, col = init_screen()				# Set up main screen and initialise curses
 
-tw = col - 2
+tw = col - 2							# Set up left / right widths and positions
 bw = col - 2
 mw = col - 2
-th = 2
-bh = 5
-mh = row - ( (th + 3) + (bh + 3) )
-ty = 1
-by = row - bh
-my = th + mh
 tx = 1
 bx = 1
 mx = 1
 
-#ty = 1
-#tx = 1
-#bh = 5
-#bw = col - 2
-#by = row - 6
-#bx = 1
-#my = th + ty + 3
-#mh = row - ( th + ty + bh + by )
-#mw = col - 2
-#mx = 1
+ty = 2
+th = 2
+bh = 4
+by = row - (bh + 1)
+my = th + ty + 2
+mh = row - (my + bh + 3)
 
 topwin = curses.newwin(th, tw, ty, tx)				# Set up status windows
-midwin = curses.newwin(row - 14, col - 2, 4, 1 )
-botwin = curses.newwin(5, col -2, row - 8, 1)
+midwin = curses.newwin(mh, mw, my, mx)
+botwin = curses.newwin(bh, bw, by, bx)
 
 stdscr.bkgd(' ', curses.color_pair(4))				# ...and set their colours
 
-stdscr.addstr(0, 1, "Current AP")
-stdscr.addstr(my - 1, 1, "RSSI")
-stdscr.addstr(by - 1, 1, "History")
+stdscr.addstr(ty - 1, 1, "Current AP", curses.A_BOLD)
+stdscr.addstr(my - 1, 1, "RSSI", curses.A_BOLD)
+stdscr.addstr(by - 1, 1, "History", curses.A_BOLD)
 
 topwin.bkgd(' ', curses.color_pair(1))
 midwin.bkgd(' ', curses.color_pair(2))
