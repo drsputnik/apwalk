@@ -20,19 +20,39 @@ def finish_screen(screen):
 
 stdscr, row, col = init_screen()				# Set up main screen and initialise curses
 curses.start_color()
+curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLUE)
+curses.init_pair(2, curses.COLOR_YELLOW, curses.COLOR_BLUE)
+curses.init_pair(3, curses.COLOR_CYAN, curses.COLOR_BLUE)
 
-topwin = curses.newwin(2, col - 2, 1, 1)			# Set up status window
-curses.init_pair(1, curses.COLOR_BLUE, curses.COLOR_BLACK)
-topwin.bkgd(' ', curses.color_pair(1))
+th = 2
+tw = col - 2
+ty = 1
+tx = 1
+bh = 5
+bw = col - 2
+by = row - 6
+bx = 1
+mh = row - ( th + ty + bh + by )
+mw = col - 2
+my = 4
+mx = 1
 
-midwin = curses.newwin(row - 9, col - 2, 4, 1 )
+topwin = curses.newwin(th, tw, ty, tx)			# Set up status windows
+midwin = curses.newwin(row - 14, col - 2, 4, 1 )
 botwin = curses.newwin(5, col -2, row - 8, 1)
+
+topwin.bkgd(' ', curses.color_pair(1))
+midwin.bkgd(' ', curses.color_pair(2))
+botwin.bkgd(' ', curses.color_pair(3))
 
 
 #midwin = newwin(
 
 topwin.addstr("Current AP: \n")
-topwin.refresh();
+botwin.addstr("Date Time RSSI SSID\n")
+topwin.refresh()
+midwin.refresh()
+botwin.refresh()
 topwin.getch()
 
 #stdscr.addstr(row-2, 0, "This screen has " + str (row) + " rows and " + str (col) + " columns.\n")
