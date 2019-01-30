@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 import curses
 def init_screen():
-	screen = curses.initscr()			# Initialise stdscr as a curses window
-	curses.noecho()					# Settings to make it terminal friendly
+	screen = curses.initscr()				# Initialise stdscr as a curses window
+	curses.noecho()						# Settings to make it terminal friendly
 	curses.cbreak()
 	screen.keypad(1)
-	r, c = screen.getmaxyx()			# Get the size of the terminal window
+	r, c = screen.getmaxyx()				# Get the size of the terminal window
 	return screen, r, c
 
 def init_win(h, w, y, x):
@@ -18,9 +18,13 @@ def finish_screen(screen):
 	curses.echo()
 	curses.endwin()
 
-stdscr, row, col = init_screen()
+stdscr, row, col = init_screen()				# Set up main screen and initialise curses
 curses.start_color()
-topwin = curses.newwin(2, col - 2, 1, 1)
+
+topwin = curses.newwin(2, col - 2, 1, 1)			# Set up status window
+curses.init_pair(1, curses.COLOR_BLUE, curses.COLOR_BACK)
+topwin.bkgd(' ', curses.color_pair(1))
+
 midwin = curses.newwin(row - 9, col - 2, 4, 1 )
 botwin = curses.newwin(5, col -2, row - 8, 1)
 
