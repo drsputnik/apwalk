@@ -36,18 +36,29 @@ def paint():							# Re-Paint the screen
 
 stdscr, row, col = init_screen()				# Set up main screen and initialise curses
 
-th = 2								# Calculations for window positions
 tw = col - 2
-ty = 1
-tx = 1
-bh = 5
 bw = col - 2
-by = row - 5
-bx = 1
-mh = row - ( th + ty + bh + by )
 mw = col - 2
-my = 4
+th = 2
+bh = 5
+mh = row - ( (th + 3) + (bh + 3) )
+ty = 1
+by = row - bh
+my = th + mh
+tx = 1
+bx = 1
 mx = 1
+
+#ty = 1
+#tx = 1
+#bh = 5
+#bw = col - 2
+#by = row - 6
+#bx = 1
+#my = th + ty + 3
+#mh = row - ( th + ty + bh + by )
+#mw = col - 2
+#mx = 1
 
 topwin = curses.newwin(th, tw, ty, tx)				# Set up status windows
 midwin = curses.newwin(row - 14, col - 2, 4, 1 )
@@ -65,8 +76,8 @@ botwin.bkgd(' ', curses.color_pair(3))
 
 init_paint()							# Paint the screen
 
-topwin.addstr("Current AP: \n")
-botwin.addstr("Date Time RSSI SSID\n")
+#topwin.addstr("Current AP: \n")
+#botwin.addstr("Date Time RSSI SSID\n")
 
 paint()								# Re-paint / update screen
 
