@@ -1,27 +1,33 @@
 import curses
 def init_screen():
-	stdscr = curses.initscr()			# Initialise stdscr as a curses window
+	screen = curses.initscr()			# Initialise stdscr as a curses window
 	curses.noecho()					# Settings to make it terminal friendly
 	curses.cbreak()
-	stdscr.keypad(1)
+	screen.keypad(1)
+	r, c = screen.getmaxyx()			# Get the size of the terminal window
+	return screen, r, c
 
-	#row = 0
-	#col = 0
+def init_win(h, w, y, x):
+	newwin = curses.newwin(h, w, y, x)
+	return newwin
 
-	r, c = stdscr.getmaxyx()			# Get the size of the terminal window
-	return stdscr, r, c
-
-def finish_screen(stdscr):
+def finish_screen(screen):
 	curses.nocbreak()
-	stdscr.keypad(0)
+	screen.keypad(0)
 	curses.echo()
 	curses.endwin()
 
+stdscr, row, col = init_screen()
 
-stdscr, row, col = init_screen();
-stdscr.addstr(row-2, 0, "This screen has " + str (row) + " rows and " + str (col) + " columns.\n")
-stdscr.addstr("Try resizing your window(if possible) and then run this program again")
-stdscr.refresh()
-stdscr.getch()
+topwin = newwin(2, col - 2, 1, 1)
+#midwin = newwin(
+
+topwin.addstr("Top Window\n")
+topwin.refresh();
+
+#stdscr.addstr(row-2, 0, "This screen has " + str (row) + " rows and " + str (col) + " columns.\n")
+#stdscr.addstr("Try resizing your window(if possible) and then run this program again")
+#stdscr.refresh()
+#stdscr.getch()
 
 finish_screen(stdscr)
