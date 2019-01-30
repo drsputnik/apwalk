@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import curses
 def init_screen():
 	screen = curses.initscr()			# Initialise stdscr as a curses window
