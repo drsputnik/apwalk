@@ -19,11 +19,15 @@ def finish_screen(screen):
 	curses.endwin()
 
 stdscr, row, col = init_screen()
+curses.start_color()
+topwin = curses.newwin(2, col - 2, 1, 1)
+midwin = curses.newwin(row - 9, col - 2, 4, 1 )
+botwin = curses.newwin(5, col -2, row - 8, 1)
 
-topwin = curses.newwin(5, col - 2, 1, 1)
+
 #midwin = newwin(
 
-topwin.addstr("Current AP: ")
+topwin.addstr("Current AP: \n")
 topwin.refresh();
 topwin.getch()
 
