@@ -22,7 +22,7 @@ stdscr, row, col = init_screen()				# Set up main screen and initialise curses
 curses.start_color()
 
 topwin = curses.newwin(2, col - 2, 1, 1)			# Set up status window
-curses.init_pair(1, curses.COLOR_BLUE, curses.COLOR_BACK)
+curses.init_pair(1, curses.COLOR_BLUE, curses.COLOR_BLACK)
 topwin.bkgd(' ', curses.color_pair(1))
 
 midwin = curses.newwin(row - 9, col - 2, 4, 1 )
