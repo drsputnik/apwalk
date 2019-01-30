@@ -19,15 +19,15 @@ def finish_screen(screen):
 
 stdscr, row, col = init_screen()
 
-topwin = curses.newwin(2, col - 2, 1, 1)
+topwin = curses.newwin(5, col - 2, 1, 1)
 #midwin = newwin(
 
-topwin.addstr("Top Window\n")
+topwin.addstr("Current AP: ")
 topwin.refresh();
+topwin.getch()
 
 #stdscr.addstr(row-2, 0, "This screen has " + str (row) + " rows and " + str (col) + " columns.\n")
 #stdscr.addstr("Try resizing your window(if possible) and then run this program again")
 #stdscr.refresh()
-#stdscr.getch()
 
 finish_screen(stdscr)
