@@ -1,4 +1,4 @@
-#import curses
+import curses
 def init_screen():
 	stdscr = curses.initscr()			# Initialise stdscr as a curses window
 	curses.noecho()					# Settings to make it terminal friendly
