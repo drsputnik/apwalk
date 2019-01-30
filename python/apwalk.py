@@ -19,7 +19,7 @@ def finish_screen(screen):
 
 stdscr, row, col = init_screen()
 
-topwin = newwin(2, col - 2, 1, 1)
+topwin = curses.newwin(2, col - 2, 1, 1)
 #midwin = newwin(
 
 topwin.addstr("Top Window\n")
