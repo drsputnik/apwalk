@@ -70,7 +70,7 @@ botwin.bkgd(' ', curses.color_pair(3))
 init_paint()							# Paint the screen
 
 # Main loop goes here
-for loop in range(0, 1000):
+for loop in range(0, 10000):
 	subprocess.call('../bash/getAP.sh > MAC', shell=True)
 	f = open("MAC", "r")
 	SSID = (f.readline())
