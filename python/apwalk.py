@@ -69,12 +69,13 @@ botwin.bkgd(' ', curses.color_pair(3))
 init_paint()							# Paint the screen
 
 # Main loop goes here
-subprocess.call('../bash/getAP.sh > MAC', shell=True)
-f = open("MAC", "r")
-SSID = (f.readline())
-#topwin.addstr(1, 1, (SSID + "\n"))
+for loop in range(0, 10):
+	subprocess.call('../bash/getAP.sh > MAC', shell=True)
+	f = open("MAC", "r")
+	SSID = (f.readline())
+	topwin.addstr(0, 0, SSID)
 
-paint()								# Re-paint / update screen
+	paint()							# Re-paint / update screen
 
 topwin.getch()							# Wait for a key
 
