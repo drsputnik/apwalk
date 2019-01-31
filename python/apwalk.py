@@ -55,6 +55,7 @@ mh = row - (my + bh + 3)
 topwin = curses.newwin(th, tw, ty, tx)				# Set up status windows
 midwin = curses.newwin(mh, mw, my, mx)
 botwin = curses.newwin(bh, bw, by, bx)
+midwin.scrollok(1)
 
 stdscr.bkgd(' ', curses.color_pair(4))				# ...and set their colours
 
@@ -69,15 +70,17 @@ botwin.bkgd(' ', curses.color_pair(3))
 init_paint()							# Paint the screen
 
 # Main loop goes here
-for loop in range(0, 10):
+for loop in range(0, 1000):
 	subprocess.call('../bash/getAP.sh > MAC', shell=True)
 	f = open("MAC", "r")
 	SSID = (f.readline())
+	powr = (f.readline())
+	f.close()
 	topwin.addstr(0, 0, SSID)
+	midwin.addstr(powr)
 
 	paint()							# Re-paint / update screen
 
-topwin.getch()							# Wait for a key
+#topwin.getch()							# Wait for a key
 
 finish_screen(stdscr)						# End the program
-print SSID
