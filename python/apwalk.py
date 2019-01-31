@@ -2,6 +2,8 @@
 import curses
 import subprocess
 
+loopmax = 1
+
 def init_screen():
 	screen = curses.initscr()				# Initialise stdscr as a curses window
 	curses.noecho()						# Settings to make it terminal friendly
@@ -44,13 +46,22 @@ mw = col - 2
 tx = 1
 bx = 1
 mx = 1
-
 ty = 2
 th = 2
 bh = 4
 by = row - (bh + 1)
 my = th + ty + 2
 mh = row - (my + bh + 3)
+
+ah = 1
+at = col - 2
+ap = at
+assid = list()
+apowr = list()
+
+for loop in range (ah, at):
+	assid.append ("00:00:00:00:00:00")
+	apowr.append (10)
 
 topwin = curses.newwin(th, tw, ty, tx)				# Set up status windows
 midwin = curses.newwin(mh, mw, my, mx)
@@ -70,17 +81,22 @@ botwin.bkgd(' ', curses.color_pair(3))
 init_paint()							# Paint the screen
 
 # Main loop goes here
-for loop in range(0, 10000):
+for loop in range(0, loopmax):
 	subprocess.call('../bash/getAP.sh > MAC', shell=True)
 	f = open("MAC", "r")
 	SSID = (f.readline())
 	powr = (f.readline())
 	f.close()
+
 	topwin.addstr(0, 0, SSID)
-	midwin.addstr(powr)
+	midwin.clear()
+	for column in range(ap, at):
+		for height in range(1, apowr[column]):
+			midwin.addch(height, column, "X")
+#	midwin.addstr(powr)
 
 	paint()							# Re-paint / update screen
 
-#topwin.getch()							# Wait for a key
-
 finish_screen(stdscr)						# End the program
+print (at, ah, ap)
+
