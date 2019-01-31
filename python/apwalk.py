@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 import curses
+import subprocess
+
 def init_screen():
 	screen = curses.initscr()				# Initialise stdscr as a curses window
 	curses.noecho()						# Settings to make it terminal friendly
@@ -66,15 +68,15 @@ botwin.bkgd(' ', curses.color_pair(3))
 
 init_paint()							# Paint the screen
 
-#topwin.addstr("Current AP: \n")
-#botwin.addstr("Date Time RSSI SSID\n")
+# Main loop goes here
+subprocess.call('../bash/getAP.sh > MAC', shell=True)
+f = open("MAC", "r")
+SSID = (f.readline())
+#topwin.addstr(1, 1, (SSID + "\n"))
 
 paint()								# Re-paint / update screen
 
-topwin.getch()
+topwin.getch()							# Wait for a key
 
-#stdscr.addstr(row-2, 0, "This screen has " + str (row) + " rows and " + str (col) + " columns.\n")
-#stdscr.addstr("Try resizing your window(if possible) and then run this program again")
-#stdscr.refresh()
-
-finish_screen(stdscr)
+finish_screen(stdscr)						# End the program
+print SSID
