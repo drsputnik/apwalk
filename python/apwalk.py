@@ -2,7 +2,7 @@
 import curses
 import subprocess
 
-loopmax = 1
+loopmax = 1000
 
 def init_screen():
 	screen = curses.initscr()				# Initialise stdscr as a curses window
@@ -55,13 +55,14 @@ mh = row - (my + bh + 3)
 
 ah = 1
 at = col - 2
-ap = at
+ap = ah
 assid = list()
 apowr = list()
+hscale = float(mh) / 100.0
 
 for loop in range (ah, at):
 	assid.append ("00:00:00:00:00:00")
-	apowr.append (10)
+	apowr.append (-100)
 
 topwin = curses.newwin(th, tw, ty, tx)				# Set up status windows
 midwin = curses.newwin(mh, mw, my, mx)
@@ -88,15 +89,20 @@ for loop in range(0, loopmax):
 	powr = (f.readline())
 	f.close()
 
+	for column in range(ah + 1, (at - 1)):
+		apowr[column - 1] = int(apowr[column])
+	apowr[at - 2] = int(powr.strip())
 	topwin.addstr(0, 0, SSID)
 	midwin.clear()
-	for column in range(ap, at):
-		for height in range(1, apowr[column]):
-			midwin.addch(height, column, "X")
-#	midwin.addstr(powr)
+	for column in range(ah, (at - 1)):
+		height = abs((apowr[column]))
+		for winrow in range(1, height):
+			text = "X"
+			midwin.addstr((mh - 1) - (int(winrow * hscale)), column, text)
 
 	paint()							# Re-paint / update screen
 
-finish_screen(stdscr)						# End the program
-print (at, ah, ap)
+#	junk = midwin.getch()
 
+finish_screen(stdscr)						# End the program
+print ("powr hscale: " + str(hscale))
